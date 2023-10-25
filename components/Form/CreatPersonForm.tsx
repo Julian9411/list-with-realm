@@ -1,7 +1,7 @@
 import ButtonAction from "../ButtonAction";
 import { useRealm } from "@realm/react";
 import { useState } from "react";
-import { Text, TextInput, View } from "react-native";
+import { ScrollView, Text, TextInput, View } from "react-native";
 import Realm from "realm";
 
 
@@ -12,12 +12,12 @@ const CreatePersonInput = () => {
 
   const handleAddPerson = () => {
     realm.write(() => {
-      realm.create("Person", { _id: new Realm.BSON.UUID(), name, age });
+      realm.create("Person", { _id: new Realm.BSON.UUID(), name, age: Number(age) });
     });
   };
 
   return (
-    <>
+    <ScrollView>
       <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center" }}>
         Add new person
       </Text>
@@ -35,7 +35,7 @@ const CreatePersonInput = () => {
           onChangeText={setName}
         />
       </View>
-      <View style={{ paddingHorizontal: 15 }}>
+      <View style={{ paddingHorizontal: 15, marginBottom: 50 }}>
         <Text>Age of person</Text>
         <TextInput
           style={{
@@ -54,7 +54,7 @@ const CreatePersonInput = () => {
         onPress={() => handleAddPerson()}
         buttonTitle="Add Person"
       />
-    </>
+    </ScrollView>
   );
 };
 
