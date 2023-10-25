@@ -2,7 +2,10 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import Realm, { ObjectSchema } from "realm";
 import { RealmProvider } from "@realm/react";
-import ButtonAction from "@components/ButtonAction";
+import ButtonAction from "./components/ButtonAction";
+import { useState } from "react";
+import Modal from "./components/Modal";
+import CreatePersonInput from "./components/Form/CreatPersonForm";
 
 class Person extends Realm.Object<Person> {
   name!: string;
@@ -16,6 +19,8 @@ class Person extends Realm.Object<Person> {
   };
 }
 export default function App() {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <RealmProvider schema={[Person]}>
       <View style={styles.container}>
@@ -23,9 +28,12 @@ export default function App() {
         <StatusBar style="auto" />
       </View>
       <ButtonAction
-        onPress={() => console.log("press")}
+        onPress={() => setShowModal(!showModal)}
         buttonTitle="Add Person"
       />
+      <Modal setShowModal={setShowModal} showModal={showModal}>
+        <CreatePersonInput />
+      </Modal>
     </RealmProvider>
   );
 }
